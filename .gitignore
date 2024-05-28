@@ -1,2 +1,3 @@
 local.env
 table/__pycache__/*
+docker/images/
