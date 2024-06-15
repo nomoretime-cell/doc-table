@@ -1,3 +1,4 @@
+import datetime
 import logging
 import os
 import threading
@@ -6,6 +7,7 @@ from table.settings import settings
 from pyfunvice import (
     app_service,
     start_app,
+    app_service_get,
 )
 
 logging.basicConfig(
@@ -55,5 +57,11 @@ async def process(
         return 
 
 
+@app_service_get(path="/health")
+async def health(data: dict) -> dict:
+    time_string = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return {"timestamp": time_string}
+
+
 if __name__ == "__main__":
-    start_app(workers=settings.WORKER_NUM, port=8003, post_fork_func=None)
+    start_app(workers=settings.WORKER_NUM, port=8000, post_fork_func=None)
